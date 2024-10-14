@@ -1,0 +1,6 @@
+logic\Logic.class
+servlets\GetData.class
+servlets\SetData.class
+logic\Logs.class
+logic\Measurement.class
+logic\ConectionDDBB.class
