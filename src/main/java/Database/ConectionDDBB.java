@@ -1,4 +1,4 @@
-package logic;
+package Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import logic.Log;
 
 
 public class ConectionDDBB
@@ -20,7 +21,7 @@ public class ConectionDDBB
         int intentos = 5;
         for (int i = 0; i < intentos; i++) 
         {
-        	Logs.log.info("Attempt " + i + " to connect to the database");
+        	Log.log.info("Attempt " + i + " to connect to the database");
         	try
 	          {
 	            Context ctx = new InitialContext();
@@ -31,16 +32,16 @@ public class ConectionDDBB
 	            con = ds.getConnection();
 				Calendar calendar = Calendar.getInstance();
 				java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
-	            Logs.log.debug("Connection creation. Bd connection identifier: " + con.toString() + " obtained in " + date.toString());
+	            Log.log.debug("Connection creation. Bd connection identifier: " + con.toString() + " obtained in " + date.toString());
 	            con.setAutoCommit(autoCommit);
-	        	Logs.log.info("Conection obtained in the attempt: " + i);
+	        	Log.log.info("Conection obtained in the attempt: " + i);
 	            i = intentos;
 	          } catch (NamingException ex)
 	          {
-	            Logs.log.error("Error getting connection while trying: " + i + " = " + ex); 
+	            Log.log.error("Error getting connection while trying: " + i + " = " + ex); 
 	          } catch (SQLException ex)
 	          {
-	            Logs.log.error("ERROR sql getting connection while trying: " + i + " = " + ex.getSQLState() + "\n" + ex.toString());
+	            Log.log.error("ERROR sql getting connection while trying: " + i + " = " + ex.getSQLState() + "\n" + ex.toString());
 	            throw (new NullPointerException("SQL connection is null"));
 	          }
 		}        
@@ -52,10 +53,10 @@ public class ConectionDDBB
         try
           {
             con.commit();
-            Logs.log.debug("Transaction closed");
+            Log.log.debug("Transaction closed");
           } catch (SQLException ex)
           {
-            Logs.log.error("Error closing the transaction: " + ex);
+            Log.log.error("Error closing the transaction: " + ex);
           }
     }
     
@@ -64,10 +65,10 @@ public class ConectionDDBB
         try
           {
             con.rollback();
-            Logs.log.debug("Transaction canceled");
+            Log.log.debug("Transaction canceled");
           } catch (SQLException ex)
           {
-            Logs.log.error("ERROR sql when canceling the transation: " + ex.getSQLState() + "\n"  + ex.toString());
+            Log.log.error("ERROR sql when canceling the transation: " + ex.getSQLState() + "\n"  + ex.toString());
           }
     }
 
@@ -75,19 +76,19 @@ public class ConectionDDBB
     {
         try
           {
-        	Logs.log.info("Closing the connection");
+        	Log.log.info("Closing the connection");
             if (null != con)
               {
 				Calendar calendar = Calendar.getInstance();
 				java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
-	            Logs.log.debug("Connection closed. Bd connection identifier: " + con.toString() + " obtained in " + date.toString());
+	            Log.log.debug("Connection closed. Bd connection identifier: " + con.toString() + " obtained in " + date.toString());
                 con.close();
               }
 
-        	Logs.log.info("The connection has been closed");
+        	Log.log.info("The connection has been closed");
           } catch (SQLException e)
           {
-        	  Logs.log.error("ERROR sql closing the connection: " + e);
+        	  Log.log.error("ERROR sql closing the connection: " + e);
         	  e.printStackTrace();
           }
     }
@@ -104,7 +105,7 @@ public class ConectionDDBB
               }
           } catch (SQLException ex)
           {
-    	        Logs.log.warn("ERROR sql creating PreparedStatement: " + ex.toString());
+    	        Log.log.warn("ERROR sql creating PreparedStatement: " + ex.toString());
           }
 
         return ps;

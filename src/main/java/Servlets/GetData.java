@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import logic.Logs;
+import logic.Log;
 import logic.Logic;
 import logic.Measurement;
 
@@ -34,7 +34,7 @@ public class GetData extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Logs.log.info("--Set new value into the DB--");
+		Log.log.info("--Set new value into the DB--");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		try 
@@ -46,15 +46,15 @@ public class GetData extends HttpServlet {
 		} catch (NumberFormatException nfe) 
 		{
 			out.println("-1");
-			Logs.log.error("Number Format Exception: " + nfe);
+			Log.log.error("Number Format Exception: " + nfe);
 		} catch (IndexOutOfBoundsException iobe) 
 		{
 			out.println("-1");
-			Logs.log.error("Index out of bounds Exception: " + iobe);
+			Log.log.error("Index out of bounds Exception: " + iobe);
 		} catch (Exception e) 
 		{
 			out.println("-1");
-			Logs.log.error("Exception: " + e);
+			Log.log.error("Exception: " + e);
 		} finally 
 		{
 			out.close();

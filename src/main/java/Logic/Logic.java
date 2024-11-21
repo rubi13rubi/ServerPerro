@@ -1,5 +1,6 @@
 package logic;
 
+import Database.ConectionDDBB;
 import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Connection;
@@ -19,10 +20,10 @@ public class Logic
 		try
 		{
 			con = conector.obtainConnection(true);
-			Logs.log.info("Database Connected");
+			Log.log.info("Database Connected");
 			
 			PreparedStatement ps = ConectionDDBB.GetDataBD(con);
-			Logs.log.info("Query=>" + ps.toString());
+			Log.log.info("Query=>" + ps.toString());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 			{
@@ -33,15 +34,15 @@ public class Logic
 			}	
 		} catch (SQLException e)
 		{
-			Logs.log.error("Error: " + e);
+			Log.log.error("Error: " + e);
 			values = new ArrayList<Measurement>();
 		} catch (NullPointerException e)
 		{
-			Logs.log.error("Error: " + e);
+			Log.log.error("Error: " + e);
 			values = new ArrayList<Measurement>();
 		} catch (Exception e)
 		{
-			Logs.log.error("Error:" + e);
+			Log.log.error("Error:" + e);
 			values = new ArrayList<Measurement>();
 		}
 		conector.closeConnection(con);
@@ -57,24 +58,24 @@ public class Logic
 		try
 		{
 			con = conector.obtainConnection(true);
-			Logs.log.info("Database Connected");
+			Log.log.info("Database Connected");
 
 			PreparedStatement ps = ConectionDDBB.SetDataBD(con);
 			ps.setInt(1, value);
 			ps.setTimestamp(2, new Timestamp((new Date()).getTime()));
-			Logs.log.info("Query=>" + ps.toString());
+			Log.log.info("Query=>" + ps.toString());
 			ps.executeUpdate();
 		} catch (SQLException e)
 		{
-			Logs.log.error("Error: " + e);
+			Log.log.error("Error: " + e);
 			values = new ArrayList<Measurement>();
 		} catch (NullPointerException e)
 		{
-			Logs.log.error("Error: " + e);
+			Log.log.error("Error: " + e);
 			values = new ArrayList<Measurement>();
 		} catch (Exception e)
 		{
-			Logs.log.error("Error:" + e);
+			Log.log.error("Error:" + e);
 			values = new ArrayList<Measurement>();
 		}
 		conector.closeConnection(con);
