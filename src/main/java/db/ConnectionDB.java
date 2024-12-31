@@ -11,7 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import logic.Log;
+import Logic.Log;
 
 public class ConnectionDB {
 
